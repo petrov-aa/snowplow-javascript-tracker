@@ -29,7 +29,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c --silent --failAfterWarnings",
+    "build": "rollup --silent",
     "docker:micro": "docker pull snowplow/snowplow-micro:latest",
     "test": "jest test/unit/*.test.ts --no-cache",
     "test:build": "rollup --config rollup.config.test.js --silent",

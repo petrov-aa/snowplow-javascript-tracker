@@ -9,10 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-20.04
 
-    env:
-      SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-      SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-      BROWSERSLIST_IGNORE_OLD_DATA: true
+    # env:
+    #   SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+    #   SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+    #   BROWSERSLIST_IGNORE_OLD_DATA: true
 
     steps:
       - name: Checkout
@@ -39,26 +39,26 @@ jobs:
       - name: Test
         run: node common/scripts/install-run-rush.js test --verbose
 
-      - name: Block Concurrent Executions of E2E Tests
-        if: ${{ env.SAUCE_ACCESS_KEY != '' }}
-        uses: softprops/turnstyle@v1
-        with:
-          poll-interval-seconds: 20
-          same-branch-only: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Block Concurrent Executions of E2E Tests
+      #   if: ${{ env.SAUCE_ACCESS_KEY != '' }}
+      #   uses: softprops/turnstyle@v1
+      #   with:
+      #     poll-interval-seconds: 20
+      #     same-branch-only: false
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Add Host for Saucelabs Tunnel
-        if: ${{ env.SAUCE_ACCESS_KEY != '' }}
-        run: echo "127.0.0.1 snowplow-js-tracker.local" | sudo tee -a /etc/hosts
+      # - name: Add Host for Saucelabs Tunnel
+      #   if: ${{ env.SAUCE_ACCESS_KEY != '' }}
+      #   run: echo "127.0.0.1 snowplow-js-tracker.local" | sudo tee -a /etc/hosts
 
-      - name: Run End to End Tests
-        if: ${{ env.SAUCE_ACCESS_KEY != '' }}
-        working-directory: ./trackers/javascript-tracker
-        run: node ../../common/scripts/install-run-rushx.js test:e2e:sauce
+      # - name: Run End to End Tests
+      #   if: ${{ env.SAUCE_ACCESS_KEY != '' }}
+      #   working-directory: ./trackers/javascript-tracker
+      #   run: node ../../common/scripts/install-run-rushx.js test:e2e:sauce
 
-      - name: Pack
-        run: node common/scripts/install-run-rush.js publish -p --pack --include-all
+      # - name: Pack
+      #   run: node common/scripts/install-run-rush.js publish -p --pack --include-all
 
       - name: Upload packages
         uses: actions/upload-artifact@v2

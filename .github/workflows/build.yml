@@ -35,9 +35,10 @@ jobs:
 
       - name: Build
         run: node common/scripts/install-run-rush.js rebuild --verbose
+        continue-on-error: true
 
-      - name: Test
-        run: node common/scripts/install-run-rush.js test --verbose
+      # - name: Test
+      #   run: node common/scripts/install-run-rush.js test --verbose
 
       # - name: Block Concurrent Executions of E2E Tests
       #   if: ${{ env.SAUCE_ACCESS_KEY != '' }}

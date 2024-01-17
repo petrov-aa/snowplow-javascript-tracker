@@ -49,7 +49,6 @@ export default (cmdlineArgs) => {
     commonjs(),
     ts(),
     compiler(),
-    terser(),
     cleanup({ comments: 'none' }),
     banner(),
     sizes(),
